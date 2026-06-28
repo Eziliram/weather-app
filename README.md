@@ -6,7 +6,7 @@
 
 Requirements:
 
-- Node.js 16+ (LTS)
+- Node.js 20+ (LTS)
 - npm (or use yarn/pnpm if you prefer)
 
 ## Commands
@@ -54,3 +54,17 @@ Instead of introducing mocked or simulated data, I chose to:
 
 - Prioritise app architecture and user experience over unsupported features
 - Implement a provider abstraction layer for future API expansion
+
+# Project structure
+
+- src
+  - App.tsx
+  - main.tsx
+  - pages
+    - Overview.tsx
+  - Settings
+    - components
+    - weather
+      - CurrentWeatherCard.tsx
+      - WeatherGrid.tsx
+      - WeatherTile.tsx

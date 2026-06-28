@@ -1,3 +1,5 @@
+import { Button } from "@chakra-ui/react";
+import { RiRefreshLine } from "react-icons/ri";
 import "./App.css";
 
 function App() {
@@ -8,12 +10,13 @@ function App() {
           <h1>Today</h1>
           <p>Partly cloudly</p>
         </div>
-        <button
+        <Button
           id="button_refresh"
-          type="button"
+          colorPalette="teal"
           onClick={() => console.log("Refreshing weather data...")}>
+          <RiRefreshLine />
           Refresh
-        </button>
+        </Button>
       </section>
 
       <section id="weather_log">
