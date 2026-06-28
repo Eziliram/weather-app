@@ -31,6 +31,14 @@ My goal is to keep it simple, functional and clean. I want to build a solution t
 
 # Design decisions and trade-offs
 
+## SWR cache strategy
+
+Compared to other real time apps, weather data changes relatively slowly.
+
+Therefore, the app uses a stale-while-revalidate (SWR) cache strategy with a (x) minute freshness window to reduce API calls, while still maintaining a responsive user experience.
+
+The user will receive weather data from the cache (even if its stale), while fresh weather data is fetched and cached in the background for future requests. This balances a fast UI load time with up-to-date weather data.
+
 ## Limitations
 
 ### WeatherStack
