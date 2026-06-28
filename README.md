@@ -1,32 +1,48 @@
-# React + TypeScript + Vite
+### A simple weather app
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> By Marilize Franken
 
-Currently, two official plugins are available:
+# How to run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Requirements:
 
-## React Compiler
+- Node.js 16+ (LTS)
+- npm (or use yarn/pnpm if you prefer)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Commands
 
-## Expanding the Oxlint configuration
+- Install dependencies: `npm install`
+- Run dev server (Vite): `npm run dev`
+- Run tests (Vitest + RTL): `npm run test`
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+# Architecture
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+My goal is to keep it simple, functional and clean. I want to build a solution that is easy to scale, maintain and test.
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## React + TypeScript + Vite
+
+## Vitest + React Testing Library (RTL)
+
+## Chakra UI
+
+## Weather provider
+
+- WeatherStack
+
+# Design decisions and trade-offs
+
+## Limitations
+
+### WeatherStack
+
+WeatherStack's free tier only provides _current_ weather.
+
+It does NOT support:
+
+- Forecasting
+- Historical weather data
+
+Instead of introducing mocked or simulated data, I chose to:
+
+- Prioritise app architecture and user experience over unsupported features
+- Implement a provider abstraction layer for future API expansion
