@@ -58,3 +58,7 @@ export interface CurrentWeather {
   data: WeatherResponse;
   timestamp: number;
 }
+
+export interface WeatherState {
+  current: CurrentWeather,
+}
