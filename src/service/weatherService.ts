@@ -13,7 +13,10 @@ const weatherService = {
             // return the cached weather data
             if (cachedWeather) {
                 console.info("Fetching weather data from cache.");
-                return cachedWeather;
+                return {
+                    data: cachedWeather.data,
+                    lastUpdated: cachedWeather.lastUpdated
+                };
             }
         }
 
@@ -23,7 +26,10 @@ const weatherService = {
         
         const freshCurrentWeatherData = await weatherApi.getCurrent(city);
         weatherCache.set(cacheKey, freshCurrentWeatherData);
-        return freshCurrentWeatherData;
+        return {
+            data: freshCurrentWeatherData,
+            lastUpdated: new Date()
+        };
     },
 
     getForecast() {

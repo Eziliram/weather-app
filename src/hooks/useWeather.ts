@@ -13,7 +13,8 @@ export const useWeather = (city: string) => {
             const currentWeatherData = await weatherService.getCurrent(selectedCity, forceRefresh);
             setWeather({
                 current: {
-                    data: currentWeatherData,
+                    data: currentWeatherData.data,
+                    timestamp: currentWeatherData.lastUpdated
                 } as CurrentWeather
             });
         } catch (error) {

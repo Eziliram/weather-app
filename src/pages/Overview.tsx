@@ -1,7 +1,6 @@
 import CurrentWeatherCard from "@/components/weather/current-weather-card/CurrentWeatherCard";
 import { useWeather } from "@/hooks/useWeather";
-import { Box, Button } from "@chakra-ui/react";
-import { HiOutlineRefresh } from "react-icons/hi";
+import { Box } from "@chakra-ui/react";
 
 // Set default city as Cape Town
 // Enhancement: Ability to search for/detect a location
@@ -23,15 +22,8 @@ const Overview = () => {
           currentWeather={weather?.current}
           isLoading={isLoading}
           hasError={hasError}
+          onForceRefresh={handleForceRefresh}
         />
-        <Button
-          id="button_refresh"
-          colorPalette="teal"
-          onClick={() => handleForceRefresh}
-          aria-label="button_refresh">
-          <HiOutlineRefresh />
-          Refresh
-        </Button>
       </section>
     </Box>
   );

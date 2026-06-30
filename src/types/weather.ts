@@ -56,7 +56,7 @@ export interface WeatherResponse {
 
 export interface CurrentWeather {
   data: WeatherResponse;
-  timestamp: number;
+  timestamp: Date;
 }
 
 export interface WeatherState {
