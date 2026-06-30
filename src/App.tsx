@@ -1,23 +1,10 @@
-import { Button } from "@chakra-ui/react";
-import { RiRefreshLine } from "react-icons/ri";
 import "./App.css";
+import Overview from "./pages/Overview";
 
-function App() {
+const App = () => {
   return (
     <>
-      <section id="weather_today">
-        <div>
-          <h1>Today</h1>
-          <p>Partly cloudly</p>
-        </div>
-        <Button
-          id="button_refresh"
-          colorPalette="teal"
-          onClick={() => console.log("Refreshing weather data...")}>
-          <RiRefreshLine />
-          Refresh
-        </Button>
-      </section>
+      <Overview />
 
       <section id="weather_log">
         <div id="weather_forecast">
@@ -41,6 +28,6 @@ function App() {
       <section id="spacer"></section>
     </>
   );
-}
+};
 
 export default App;
