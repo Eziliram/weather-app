@@ -1,22 +1,20 @@
 import CurrentWeatherCard from "@/components/weather/current-weather-card/CurrentWeatherCard";
 import { useWeather } from "@/hooks/useWeather";
-import weatherService from "@/service/weatherService";
-import type { CurrentWeather, WeatherResponse } from "@/types/weather";
 import { Box, Button } from "@chakra-ui/react";
-import React from "react";
 import { HiOutlineRefresh } from "react-icons/hi";
 
 // Set default city as Cape Town
-// Enhancement: Ability to select/detect location
+// Enhancement: Ability to search for/detect a location
 const DEFAULT_CITY = "Cape Town";
 
 const Overview = () => {
-  const { weather, isLoading, hasError, refreshWeather } =
+  const { weather, isLoading, hasError, forceRefresh } =
     useWeather(DEFAULT_CITY);
 
-  React.useEffect(() => {
-    refreshWeather(DEFAULT_CITY);
-  }, []);
+  const handleForceRefresh = () => {
+    // Enhancement: throttle function to only allow a specified number of refreshes in a certain timeframe
+    forceRefresh(DEFAULT_CITY, true);
+  };
 
   return (
     <Box margin={8}>
@@ -29,7 +27,7 @@ const Overview = () => {
         <Button
           id="button_refresh"
           colorPalette="teal"
-          onClick={() => refreshWeather(DEFAULT_CITY)}
+          onClick={() => handleForceRefresh}
           aria-label="button_refresh">
           <HiOutlineRefresh />
           Refresh

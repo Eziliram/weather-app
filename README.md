@@ -49,7 +49,7 @@ Therefore, to keep the number of calls made to Weatherstack to a minimal, and to
 
 On page load, if the weather data is older than (x) minutes or (x) days, fresh data will be fetched and displayed, and the cache will be updated.
 
-The user also has the option to refresh the current weather data by clicking on a Refresh button. (Future enhancement: We can take it a step further to also throttle the the number of refreshes allowed in a certain timeframe.)
+The user also has the option to refresh the current weather data by clicking on a Refresh button. (Future enhancement: We can take it a step further to also throttle the number of refreshes allowed in a certain timeframe.)
 
 This way, API calls made to Weatherstack will be kept to a minimum, while the user still has the flexibility to see up-to-date weather data.
 
@@ -76,11 +76,10 @@ Instead of introducing mocked or simulated data, I chose to:
   - main.tsx
   - pages
     - Overview.tsx
-    - Settings.tsx
   - components
     - weather
       - CurrentWeatherCard.tsx
       - WeatherGrid.tsx
       - WeatherTile.tsx
 
-fetch API < weatherApi < weatherCache < weatherService < weatherProvider < useWeather hook < UI
+fetch API < weatherApi < weatherCache < weatherService < useWeather hook < UI
