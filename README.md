@@ -64,10 +64,11 @@ The free tier does NOT support:
 - Forecasting
 - Historical weather data
 
-Instead of introducing mocked or simulated data, I chose to:
+Since forecast and historical weather data is not available, I chose to:
 
 - Prioritise app architecture and user experience over unsupported features
 - Implement a provider abstraction layer for future API expansion
+- Use mock data for forecast and historical weather data for display purposes only
 
 # Project structure
 

@@ -1,14 +1,21 @@
+import { useState } from "react";
 import CurrentWeatherCard from "@/components/weather/current-weather-card/CurrentWeatherCard";
+import WeatherGrid from "@/components/weather/weather-grid/WeatherGrid";
 import { useWeather } from "@/hooks/useWeather";
-import { Box } from "@chakra-ui/react";
+import { Heading, Text, Switch, Em, Box } from "@chakra-ui/react";
 
 // Set default city as Cape Town
 // Enhancement: Ability to search for/detect a location
 const DEFAULT_CITY = "Cape Town";
 
 const Overview = () => {
+  const [showWeatherInsightsPreview, setWeatherInsightsPreview] =
+    useState(false);
   const { weather, isLoading, hasError, forceRefresh } =
     useWeather(DEFAULT_CITY);
+
+  const forecastData = showWeatherInsightsPreview ? weather?.forecast : [];
+  const historyData = showWeatherInsightsPreview ? weather?.history : [];
 
   const handleForceRefresh = () => {
     // Enhancement: throttle function to only allow a specified number of refreshes in a certain timeframe
@@ -16,7 +23,7 @@ const Overview = () => {
   };
 
   return (
-    <Box margin={8}>
+    <>
       <section id="weather_today">
         <CurrentWeatherCard
           currentWeather={weather?.current}
@@ -25,7 +32,44 @@ const Overview = () => {
           onForceRefresh={handleForceRefresh}
         />
       </section>
-    </Box>
+
+      <section id="weather_insights">
+        <Heading fontSize="xl">Weather insights</Heading>
+        <Box display="flex" alignItems="center" gap={3} mt={4} mb={4}>
+          <Switch.Root
+            checked={showWeatherInsightsPreview}
+            onCheckedChange={() =>
+              setWeatherInsightsPreview(
+                (showWeatherInsightsPreview) => !showWeatherInsightsPreview,
+              )
+            }>
+            <Switch.HiddenInput />
+            <Switch.Control />
+            <Switch.Label fontSize="md">Show preview*</Switch.Label>
+          </Switch.Root>
+        </Box>
+
+        <Text fontSize="sm">
+          <Em>
+            *Toggle this switch to display mocked forecast and history data in
+            the weather grid.
+          </Em>
+        </Text>
+      </section>
+
+      <section id="weather_grid">
+        <WeatherGrid
+          id="weather_forecast"
+          title="3-day forecast"
+          data={forecastData}
+        />
+        <WeatherGrid
+          id="weather_history"
+          title="3-day history"
+          data={historyData}
+        />
+      </section>
+    </>
   );
 };
 

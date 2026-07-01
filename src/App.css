@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
-  flex-grow: 1;
 
   @media (max-width: 1024px) {
     padding: 32px 20px 24px;
@@ -10,14 +9,27 @@
   }
 }
 
-#weather_log {
+#weather_insights {
   display: flex;
+  flex-direction: column;
   border-top: 1px solid var(--border);
+  padding: 32px 40px 24px;
+
+  @media (max-width: 1024px) {
+    padding: 32px 64px;
+    gap: 18px;
+  }
+}
+
+#weather_grid {
+  display: flex;
+  border: 1px solid var(--border);
   text-align: left;
+  margin: 0 40px;
 
   &>div {
     flex: 1 1 0;
-    padding: 32px;
+    padding: 32px 40px;
 
     @media (max-width: 1024px) {
       padding: 24px 20px;
@@ -30,24 +42,6 @@
   }
 }
 
-#weather_log ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-  }
-}
-
 #weather_forecast,
 #weather_history {
   border-right: 1px solid var(--border);
@@ -55,14 +49,5 @@
   @media (max-width: 1024px) {
     border-right: none;
     border-bottom: 1px solid var(--border);
-  }
-}
-
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    height: 48px;
   }
 }

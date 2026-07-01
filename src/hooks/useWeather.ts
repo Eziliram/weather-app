@@ -1,6 +1,7 @@
 import weatherService from "@/service/weatherService";
-import type { CurrentWeather, WeatherState } from "@/types/weather";
+import { type Weather, type WeatherState } from "@/types/weather";
 import React from "react"
+import { mockForecastData, mockHistoryData } from "./mockWeatherData";
 
 export const useWeather = (city: string) => {
     const [weather, setWeather] = React.useState<WeatherState>();
@@ -15,7 +16,9 @@ export const useWeather = (city: string) => {
                 current: {
                     data: currentWeatherData.data,
                     timestamp: currentWeatherData.lastUpdated
-                } as CurrentWeather
+                } as Weather,
+                forecast: mockForecastData as Weather[],
+                history: mockHistoryData as Weather[],
             });
         } catch (error) {
             console.error("Error loading weather", error);
@@ -23,11 +26,11 @@ export const useWeather = (city: string) => {
         } finally {
             setIsLoading(false);
         }
-    }, [city]);
+    }, []);
 
     React.useEffect(() => {
         loadWeather(city);
-    }, [loadWeather]);
+    }, [loadWeather, city]);
 
     return {
         weather,

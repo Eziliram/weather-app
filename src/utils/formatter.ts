@@ -1,8 +1,8 @@
-export const formatDate = (value: Date) => {
+export const formatDate = (value: Date, format = "long") => {
     return new Intl.DateTimeFormat("en-GB", {
-    weekday: "long",
+    weekday: format === "long" ? "long" : "short",
     day: "2-digit",
-    month: "long",
+    month: format === "long" ? "long" : "short",
   }).format(value);
 } 
 
@@ -15,3 +15,12 @@ export const formatTime = (value: Date) => {
     .format(value)
     .toUpperCase();
 }
+
+export const formatTemperature = (value: number, isMetric: boolean) =>
+    `${value}${isMetric ? "°C" : "°F"}`;
+
+  export const formatSpeed = (value: number, isMetric: boolean) =>
+    `${value} ${isMetric ? "km/h" : "mph"}`;
+
+  export const formatDistance = (value: number, isMetric: boolean) =>
+    `${value} ${isMetric ? "km" : "miles"}`;

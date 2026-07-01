@@ -54,11 +54,13 @@ export interface WeatherResponse {
   };
 };
 
-export interface CurrentWeather {
+export interface Weather {
   data: WeatherResponse;
   timestamp: Date;
 }
 
 export interface WeatherState {
-  current: CurrentWeather,
+  current: Weather,
+  forecast: Weather[],
+  history: Weather[],
 }
