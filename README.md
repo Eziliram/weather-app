@@ -12,7 +12,8 @@ Requirements:
 ## Commands
 
 - Install dependencies: `npm install`
-- Run dev server (Vite): `npm run dev`
+- Run the dev server (Vite): `npm run dev`
+- Build the app: `npm run build`
 - Run tests (Vitest + RTL): `npm run test`
 
 # Architecture
@@ -39,19 +40,19 @@ Limitation
 - Weatherstack has a limitation on the amount of API calls that can be made per month on the free tier.
 - Upgraded tiers also have limitations on the amount of API calls that can be made per month.
 
-So, if many users start using the app, this API call limit will be reached fairly quickly...
+So, if many users start using the app, that API call limit would be reached fairly quickly.
 
-Compared to other real time apps, weather data changes relatively slowly.
+Compared to other real-time apps, weather data changes relatively slowly.
 
-Therefore, to keep the number of calls made to Weatherstack to a minimal, and to keep the app simple, the app makes use of local storage to display cached weather data on page load, and only fetches new data when it is intended.
+To keep the number of calls to Weatherstack to a minimum, the app uses localStorage to show cached weather data on page load and only fetches fresh data when it makes sense to do so.
 
 #### Summary
 
-On page load, if the weather data is older than (x) minutes or (x) days, fresh data will be fetched and displayed, and the cache will be updated.
+On page load, if the cached weather data is older than 24 hours, fresh data will be fetched and displayed, and the cache will be updated.
 
-The user also has the option to refresh the current weather data by clicking on a Refresh button. (Future enhancement: We can take it a step further to also throttle the number of refreshes allowed in a certain timeframe.)
+The user also has the option to refresh the current weather data by clicking the Refresh button. A future enhancement could be to throttle refreshes over time.
 
-This way, API calls made to Weatherstack will be kept to a minimum, while the user still has the flexibility to see up-to-date weather data.
+This way, API calls made to Weatherstack stay low, while the user still has the flexibility to see up-to-date weather data.
 
 # Trade-offs
 
@@ -70,17 +71,19 @@ Since forecast and historical weather data is not available, I chose to:
 - Implement a provider abstraction layer for future API expansion
 - Use mock data for forecast and historical weather data for display purposes only
 
-# Project structure
-
-- src
-  - App.tsx
-  - main.tsx
-  - pages
-    - Overview.tsx
-  - components
-    - weather
-      - CurrentWeatherCard.tsx
-      - WeatherGrid.tsx
-      - WeatherTile.tsx
+# Project architecture
 
 fetch API < weatherApi < weatherCache < weatherService < useWeather hook < UI
+
+# Test coverage
+
+The following areas were focused on:
+
+- Overview > main page flow
+- CurrentWeatherCard > core UI weather display
+- WeatherGrid > weather grid rendering for forecast and history
+- WeatherTile > weather tile presentation
+- useWeather > data loading behaviour
+- weatherService > business logic around fetching data
+- weatherCache > caching logic
+- formatter > formatting logic
