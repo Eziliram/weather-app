@@ -1,5 +1,11 @@
-import type { CurrentWeather } from "@/types/weather";
-import { formatDate, formatTime } from "@/utils/formatter";
+import type { Weather } from "@/types/weather";
+import {
+  formatDate,
+  formatDistance,
+  formatSpeed,
+  formatTemperature,
+  formatTime,
+} from "@/utils/formatter";
 import {
   Box,
   Heading,
@@ -7,11 +13,21 @@ import {
   IconButton,
   Image,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { HiOutlineLocationMarker, HiOutlineRefresh } from "react-icons/hi";
+import {
+  WiDaySunny,
+  WiFog,
+  WiHumidity,
+  WiStrongWind,
+  WiSunrise,
+  WiSunset,
+  WiThermometer,
+} from "react-icons/wi";
 
 type Props = {
-  currentWeather?: CurrentWeather;
+  currentWeather?: Weather;
   isLoading: boolean;
   hasError: boolean;
   onForceRefresh: () => void;
@@ -38,15 +54,6 @@ const CurrentWeatherCard: React.FC<Props> = ({
   const formattedTime = formatTime(now);
   const formattedDateTime = `${formattedDate} · ${formattedTime}`;
 
-  const formatTemperature = (value: number) =>
-    `${value}${isMetric ? "°C" : "°F"}`;
-
-  const formatSpeed = (value: number) =>
-    `${value} ${isMetric ? "km/h" : "mph"}`;
-
-  const formatDistance = (value: number) =>
-    `${value} ${isMetric ? "km" : "miles"}`;
-
   const formatLastUpdated = () => {
     if (!currentWeather?.timestamp) {
       return "Unknown";
@@ -54,19 +61,30 @@ const CurrentWeatherCard: React.FC<Props> = ({
     return `${formatDate(currentWeather?.timestamp)} · ${formatTime(currentWeather?.timestamp)}`;
   };
 
-  const StatItem: React.FC<{ label: string; value: React.ReactNode }> = ({
-    label,
-    value,
-  }) => (
+  const StatItem: React.FC<{
+    label: string;
+    value: React.ReactNode;
+    icon?: React.ReactNode;
+  }> = ({ label, value, icon }) => (
     <Box
       display="flex"
-      flexDirection="column"
+      flexDirection="row"
       width={{ base: "45%", sm: "180px", md: "auto" }}
       minW="140px">
-      <Text fontSize="md" fontWeight="semibold">
-        {label}
-      </Text>
-      <Text fontSize="lg">{value}</Text>
+      {icon && (
+        <Box display="flex" alignItems="center" marginRight={2} fontSize="3xl">
+          {icon}
+        </Box>
+      )}
+
+      <VStack alignItems="flex-start" gap={0}>
+        <Text fontSize="sm" color="gray.400">
+          {label}
+        </Text>
+        <Text fontSize="md" fontWeight="bold">
+          {value}
+        </Text>
+      </VStack>
     </Box>
   );
 
@@ -101,7 +119,11 @@ const CurrentWeatherCard: React.FC<Props> = ({
   }
 
   return (
-    <Box display="flex" justifyContent="flex-start" alignItems="flex-start">
+    <Box
+      display="flex"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+      padding={8}>
       <Box display="flex" flexDirection="column" alignItems="flex-start">
         <Heading fontSize="md" display="flex" gap={2}>
           <HiOutlineLocationMarker />
@@ -117,7 +139,10 @@ const CurrentWeatherCard: React.FC<Props> = ({
             borderRadius={8}
           />
           <Heading fontSize="6xl">
-            {formatTemperature(currentWeather.data.current.temperature)}
+            {formatTemperature(
+              currentWeather.data.current.temperature,
+              isMetric,
+            )}
           </Heading>
         </Box>
 
@@ -130,49 +155,60 @@ const CurrentWeatherCard: React.FC<Props> = ({
           <Box width="100%" display="flex" flexWrap="wrap" gap={4}>
             <StatItem
               label="Feels like"
-              value={formatTemperature(currentWeather.data.current.feelslike)}
+              value={formatTemperature(
+                currentWeather.data.current.feelslike,
+                isMetric,
+              )}
+              icon={<WiThermometer />}
             />
             <StatItem
               label="Sunrise"
               value={currentWeather.data.current.astro.sunrise}
+              icon={<WiSunrise />}
             />
             <StatItem
               label="Sunset"
               value={currentWeather.data.current.astro.sunset}
+              icon={<WiSunset />}
             />
             <StatItem
               label="UV index"
               value={currentWeather.data.current.uv_index}
+              icon={<WiDaySunny />}
             />
             <StatItem
               label="Humidity"
               value={`${currentWeather.data.current.humidity}%`}
+              icon={<WiHumidity />}
             />
             <StatItem
               label="Wind"
-              value={`${formatSpeed(currentWeather.data.current.wind_speed)} (${currentWeather.data.current.wind_dir})`}
+              value={`${formatSpeed(currentWeather.data.current.wind_speed, isMetric)} (${currentWeather.data.current.wind_dir})`}
+              icon={<WiStrongWind />}
             />
             <StatItem
               label="Visibility"
-              value={formatDistance(currentWeather.data.current.visibility)}
+              value={formatDistance(
+                currentWeather.data.current.visibility,
+                isMetric,
+              )}
+              icon={<WiFog />}
             />
           </Box>
         </Box>
 
         <HStack alignItems="center" gap={3}>
-          <Text fontSize="sm" color="gray.400">
-            Last updated: {formatLastUpdated()}
-          </Text>
-
           <IconButton
             id="button_refresh"
             variant="ghost"
-            colorPalette="teal"
             onClick={onForceRefresh}
             disabled={isLoading}
             aria-label="button_refresh">
             <HiOutlineRefresh />
           </IconButton>
+          <Text fontSize="sm" color="gray.400">
+            Last updated: {formatLastUpdated()}
+          </Text>
         </HStack>
       </Box>
     </Box>
