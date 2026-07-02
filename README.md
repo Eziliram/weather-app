@@ -1,31 +1,68 @@
-### A simple weather app
+# Weather app
 
 > By Marilize Franken
 
-# How to run
+A React + TypeScript weather application showcasing production-oriented frontend architecture, caching strategies, testing, and handling of third-party API limitations.
 
-Requirements:
+# Requirements
 
 - Node.js 20+ (LTS)
 - npm (or use yarn/pnpm if you prefer)
 
-## Commands
+# Setup
+
+- Clone the repository:
+  - `git clone https://github.com/Eziliram/weather-app.git`
+  - `cd weather-app`
+
+- Copy the example environment file: `cp .env.example .env`
+
+  > The repository includes a WeatherStack API key for the purposes of this assessment so the application can be run immediately. In a production environment, API keys would be managed using environment variables and a secure secrets management solution.
+
+# Running the application
 
 - Install dependencies: `npm install`
 - Run the dev server (Vite): `npm run dev`
-- Build the app: `npm run build`
+
+# Running tests
+
 - Run tests (Vitest + RTL): `npm run test`
+
+The following areas were focused on:
+
+- Overview > main page flow
+- WeatherDetailCard > core UI weather display
+- WeatherGrid > weather grid rendering for forecast and history
+- WeatherTile > weather tile presentation
+- useWeather > data loading behaviour
+- weatherService > business logic around fetching data
+- weatherCache > caching logic
+- formatter > formatting logic
 
 # Architecture
 
-My goal is to keep it simple, functional and clean. I want to build a solution that is easy to scale, maintain and test.
+The goal of this project was to deliver a solution that is simple, maintainable, testable, and easy to extend.
 
-- React + TypeScript + Vite
-- Vitest + React Testing Library (RTL)
+- React + TypeScript
+- Vite
 - Chakra UI
-- LocalStorage
-- Weather provider
-  - Weatherstack
+- Vitest + React Testing Library
+- LocalStorage caching
+- Provider abstraction layer for weather data
+
+# Features
+
+- current weather display
+- location selector
+- weather details view
+- forecast preview (mocked)
+- historical preview (mocked)
+- interactive weather selection
+- localStorage caching
+- manual refresh
+- responsive UI
+- unit formatting utilities
+- test coverage for core application behaviour
 
 # Design decisions
 
@@ -33,22 +70,26 @@ My goal is to keep it simple, functional and clean. I want to build a solution t
 - Chakra UI to align with company component library
 - LocalStorage for caching weather data
 
-### LocalStorage
+### LocalStorage caching strategy
 
-Limitation
+#### Problem
 
-- Weatherstack has a limitation on the amount of API calls that can be made per month on the free tier.
-- Upgraded tiers also have limitations on the amount of API calls that can be made per month.
+- WeatherStack imposes monthly API call limits on both the free and paid tiers.
 
-So, if many users start using the app, that API call limit would be reached fairly quickly.
+Because WeatherStack imposes monthly API limits, reducing unnecessary requests becomes important even for relatively small applications.
 
-Compared to other real-time apps, weather data changes relatively slowly.
+Weather data changes less frequently than many real-time data sources, making it a good candidate for client-side caching.
 
-To keep the number of calls to Weatherstack to a minimum, the app uses localStorage to show cached weather data on page load and only fetches fresh data when it makes sense to do so.
+The application therefore uses localStorage to:
+
+- display cached weather data immediately on page load
+- reduce API consumption
+- improve perceived application performance
+- allow manual refreshes when the user wants the latest data
 
 #### Summary
 
-On page load, if the cached weather data is older than 24 hours, fresh data will be fetched and displayed, and the cache will be updated.
+On page load, if the cached weather data is older than 1 hour, fresh data will be fetched and displayed, and the cache will be updated.
 
 The user also has the option to refresh the current weather data by clicking the Refresh button. A future enhancement could be to throttle refreshes over time.
 
@@ -65,25 +106,21 @@ The free tier does NOT support:
 - Forecasting
 - Historical weather data
 
-Since forecast and historical weather data is not available, I chose to:
+Given the limitations of the WeatherStack free tier, I chose to prioritise:
 
-- Prioritise app architecture and user experience over unsupported features
-- Implement a provider abstraction layer for future API expansion
-- Use mock data for forecast and historical weather data for display purposes only
+- application architecture
+- user experience
+- maintainability
+- future extensibility
 
-# Project architecture
+To show the intended user experience and interaction flow, forecast and historical weather data are showcased using mock data.
 
-fetch API < weatherApi < weatherCache < weatherService < useWeather hook < UI
+# Future improvements
 
-# Test coverage
+Potential enhancements include:
 
-The following areas were focused on:
-
-- Overview > main page flow
-- WeatherDetailCard > core UI weather display
-- WeatherGrid > weather grid rendering for forecast and history
-- WeatherTile > weather tile presentation
-- useWeather > data loading behaviour
-- weatherService > business logic around fetching data
-- weatherCache > caching logic
-- formatter > formatting logic
+- Search-based location lookup
+- Refresh throttling
+- Skeleton loading states
+- Weather animations
+- End-to-end testing with Playwright

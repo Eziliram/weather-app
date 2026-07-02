@@ -1,4 +1,4 @@
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+const CACHE_DURATION = 1 * 60 * 60 * 1000; // 1 hour
 
 export const weatherCache = {
     get<T>(key: string): { data: T; lastUpdated: Date } | null {
