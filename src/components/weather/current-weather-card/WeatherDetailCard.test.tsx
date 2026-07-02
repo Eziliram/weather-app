@@ -4,16 +4,16 @@ import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import type { ComponentProps } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import CurrentWeatherCard from "./CurrentWeatherCard";
+import WeatherDetailCard from "./WeatherDetailCard";
 import type { Weather } from "@/types/weather";
 
 const renderCard = (
-  props: Partial<ComponentProps<typeof CurrentWeatherCard>> = {},
+  props: Partial<ComponentProps<typeof WeatherDetailCard>> = {},
 ) =>
   render(
     <ChakraProvider value={defaultSystem}>
-      <CurrentWeatherCard
-        currentWeather={undefined}
+      <WeatherDetailCard
+        weather={undefined}
         isLoading={false}
         hasError={false}
         onForceRefresh={vi.fn()}
@@ -85,7 +85,7 @@ afterEach(() => {
   cleanup();
 });
 
-describe("CurrentWeatherCard", () => {
+describe("WeatherDetailCard", () => {
   it("renders an error message when loading fails", () => {
     renderCard({ hasError: true });
 
@@ -102,7 +102,7 @@ describe("CurrentWeatherCard", () => {
   it("renders current weather details and triggers a refresh", () => {
     const onForceRefresh = vi.fn();
 
-    renderCard({ currentWeather: createWeather(), onForceRefresh });
+    renderCard({ weather: createWeather(), onForceRefresh });
 
     expect(
       screen.getByText(/Cape Town, Western Cape, South Africa/i),
@@ -118,7 +118,7 @@ describe("CurrentWeatherCard", () => {
   });
 
   it("disables the refresh button while loading", () => {
-    renderCard({ currentWeather: createWeather(), isLoading: true });
+    renderCard({ weather: createWeather(), isLoading: true });
 
     const refreshButton = screen.getByRole("button", {
       name: /button_refresh/i,

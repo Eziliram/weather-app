@@ -80,7 +80,7 @@ fetch API < weatherApi < weatherCache < weatherService < useWeather hook < UI
 The following areas were focused on:
 
 - Overview > main page flow
-- CurrentWeatherCard > core UI weather display
+- WeatherDetailCard > core UI weather display
 - WeatherGrid > weather grid rendering for forecast and history
 - WeatherTile > weather tile presentation
 - useWeather > data loading behaviour

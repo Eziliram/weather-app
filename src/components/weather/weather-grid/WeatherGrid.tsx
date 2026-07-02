@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import WeatherTile from "../weather-tile/WeatherTile";
 import type { Weather } from "@/types/weather";
 
@@ -11,7 +11,7 @@ type Props = {
 const WeatherGrid: React.FC<Props> = (props) => {
   return (
     <Box id={props.id} width="100%" px={[4, 6]}>
-      <Heading fontSize={["lg", "xl"]}>{props.title}</Heading>
+      <Heading fontSize={["xl", "2xl"]}>{props.title}</Heading>
       {props.data?.length ? (
         <Box
           display="flex"
@@ -26,7 +26,10 @@ const WeatherGrid: React.FC<Props> = (props) => {
           })}
         </Box>
       ) : (
-        <Box mt={4}>Feature not available.</Box>
+        <Box mt={4}>
+          <Heading>Feature not available.</Heading>
+          <Text>Click on the "Show preview" button to see a demo preview.</Text>
+        </Box>
       )}
     </Box>
   );

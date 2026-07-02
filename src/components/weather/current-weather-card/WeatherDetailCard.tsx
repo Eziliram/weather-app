@@ -27,27 +27,26 @@ import {
 } from "react-icons/wi";
 
 type Props = {
-  currentWeather?: Weather;
+  weather?: Weather;
   isLoading: boolean;
   hasError: boolean;
   onForceRefresh: () => void;
 };
 
-const CurrentWeatherCard: React.FC<Props> = ({
-  currentWeather,
+const WeatherDetailCard: React.FC<Props> = ({
+  weather,
   isLoading,
   hasError,
   onForceRefresh,
 }) => {
-  const locationLabel = currentWeather?.data.location
-    ? `${currentWeather?.data.location.name}, ${currentWeather?.data.location.region}, ${currentWeather?.data.location.country}`
+  const locationLabel = weather?.data.location
+    ? `${weather?.data.location.name}, ${weather?.data.location.region}, ${weather?.data.location.country}`
     : "Location unavailable";
 
-  const weatherIconUrl = currentWeather?.data.current.weather_icons[0];
-  const weatherDescription =
-    currentWeather?.data.current.weather_descriptions[0];
+  const weatherIconUrl = weather?.data.current.weather_icons[0];
+  const weatherDescription = weather?.data.current.weather_descriptions[0];
 
-  const isMetric = currentWeather?.data?.request?.unit === "m";
+  const isMetric = weather?.data?.request?.unit === "m";
 
   const now = new Date();
   const formattedDate = formatDate(now);
@@ -55,10 +54,10 @@ const CurrentWeatherCard: React.FC<Props> = ({
   const formattedDateTime = `${formattedDate} · ${formattedTime}`;
 
   const formatLastUpdated = () => {
-    if (!currentWeather?.timestamp) {
+    if (!weather?.timestamp) {
       return "Unknown";
     }
-    return `${formatDate(currentWeather?.timestamp)} · ${formatTime(currentWeather?.timestamp)}`;
+    return `${formatDate(weather?.timestamp)} · ${formatTime(weather?.timestamp)}`;
   };
 
   const StatItem: React.FC<{
@@ -109,7 +108,7 @@ const CurrentWeatherCard: React.FC<Props> = ({
     );
   }
 
-  if (!currentWeather?.data) {
+  if (!weather?.data) {
     return (
       <Box>
         <Heading fontSize="xl">No weather data available.</Heading>
@@ -125,7 +124,7 @@ const CurrentWeatherCard: React.FC<Props> = ({
       alignItems="flex-start"
       padding={8}>
       <Box display="flex" flexDirection="column" alignItems="flex-start">
-        <Heading fontSize="md" display="flex" gap={2}>
+        <Heading display="flex" gap={2}>
           <HiOutlineLocationMarker />
           {locationLabel}
         </Heading>
@@ -139,12 +138,11 @@ const CurrentWeatherCard: React.FC<Props> = ({
             borderRadius={8}
           />
           <Heading fontSize="6xl">
-            {formatTemperature(
-              currentWeather.data.current.temperature,
-              isMetric,
-            )}
+            {formatTemperature(weather.data.current.temperature, isMetric)}
           </Heading>
         </Box>
+
+        <Heading>{weatherDescription}</Heading>
 
         <Box
           display="flex"
@@ -156,42 +154,39 @@ const CurrentWeatherCard: React.FC<Props> = ({
             <StatItem
               label="Feels like"
               value={formatTemperature(
-                currentWeather.data.current.feelslike,
+                weather.data.current.feelslike,
                 isMetric,
               )}
               icon={<WiThermometer />}
             />
             <StatItem
               label="Sunrise"
-              value={currentWeather.data.current.astro.sunrise}
+              value={weather.data.current.astro.sunrise}
               icon={<WiSunrise />}
             />
             <StatItem
               label="Sunset"
-              value={currentWeather.data.current.astro.sunset}
+              value={weather.data.current.astro.sunset}
               icon={<WiSunset />}
             />
             <StatItem
               label="UV index"
-              value={currentWeather.data.current.uv_index}
+              value={weather.data.current.uv_index}
               icon={<WiDaySunny />}
             />
             <StatItem
               label="Humidity"
-              value={`${currentWeather.data.current.humidity}%`}
+              value={`${weather.data.current.humidity}%`}
               icon={<WiHumidity />}
             />
             <StatItem
               label="Wind"
-              value={`${formatSpeed(currentWeather.data.current.wind_speed, isMetric)} (${currentWeather.data.current.wind_dir})`}
+              value={`${formatSpeed(weather.data.current.wind_speed, isMetric)} (${weather.data.current.wind_dir})`}
               icon={<WiStrongWind />}
             />
             <StatItem
               label="Visibility"
-              value={formatDistance(
-                currentWeather.data.current.visibility,
-                isMetric,
-              )}
+              value={formatDistance(weather.data.current.visibility, isMetric)}
               icon={<WiFog />}
             />
           </Box>
@@ -215,4 +210,4 @@ const CurrentWeatherCard: React.FC<Props> = ({
   );
 };
 
-export default CurrentWeatherCard;
+export default WeatherDetailCard;

@@ -1,4 +1,4 @@
-#weather_today {
+#weather_details {
   display: flex;
   flex-direction: column;
   gap: 25px;

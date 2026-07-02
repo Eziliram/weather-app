@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CurrentWeatherCard from "@/components/weather/current-weather-card/CurrentWeatherCard";
+import WeatherDetailCard from "@/components/weather/current-weather-card/WeatherDetailCard";
 import WeatherGrid from "@/components/weather/weather-grid/WeatherGrid";
 import { useWeather } from "@/hooks/useWeather";
 import { Heading, Text, Switch, Em, Box } from "@chakra-ui/react";
@@ -24,9 +24,9 @@ const Overview = () => {
 
   return (
     <>
-      <section id="weather_today">
-        <CurrentWeatherCard
-          currentWeather={weather?.current}
+      <section id="weather_details">
+        <WeatherDetailCard
+          weather={weather?.current}
           isLoading={isLoading}
           hasError={hasError}
           onForceRefresh={handleForceRefresh}
@@ -34,7 +34,7 @@ const Overview = () => {
       </section>
 
       <section id="weather_insights">
-        <Heading fontSize="xl">Weather insights</Heading>
+        <Heading fontSize="3xl">Weather insights</Heading>
         <Box display="flex" alignItems="center" gap={3} mt={4} mb={4}>
           <Switch.Root
             checked={showWeatherInsightsPreview}

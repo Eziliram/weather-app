@@ -1,30 +1,33 @@
 import type { Weather, WeatherResponse } from "@/types/weather";
 
-// Test Data
-const mockWeatherResponse: WeatherResponse = {
+const createWeatherResponse = (
+  overrides: Partial<WeatherResponse> = {},
+): WeatherResponse => ({
   request: {
     type: "City",
-    query: "New York",
+    query: "Cape Town",
     language: "en",
     unit: "m",
   },
   location: {
-    name: "New York",
-    country: "United States of America",
-    region: "New York",
-    lat: "40.712776",
-    lon: "-74.005974",
-    timezone_id: "America/New_York",
+    name: "Cape Town",
+    country: "South Africa",
+    region: "Western Cape",
+    lat: "-33.9249",
+    lon: "18.4241",
+    timezone_id: "Africa/Johannesburg",
     localtime: "2024-01-15 10:30:00",
     localtime_epoch: 1705335000,
-    utc_offset: "-5.0",
+    utc_offset: "2.0",
   },
   current: {
     observation_time: "10:30 AM",
     temperature: 5,
     weather_code: 116,
-    weather_icons: ["https://cdn.weatherapi.com/weather/128x128/day/116.png"],
-    weather_descriptions: ["Partly cloudy"],
+    weather_icons: [
+      "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0004_black_low_cloud.png",
+    ],
+    weather_descriptions: ["Cloudy"],
     astro: {
       sunrise: "07:20 AM",
       sunset: "05:00 PM",
@@ -55,34 +58,77 @@ const mockWeatherResponse: WeatherResponse = {
     visibility: 10,
     is_day: "yes",
   },
-};
+  ...overrides,
+});
 
 export const mockForecastData: Weather[] = [
   {
-    data: mockWeatherResponse,
+    data: createWeatherResponse({
+      current: {
+        ...createWeatherResponse().current,
+        temperature: 21,
+        feelslike: 22,
+        weather_descriptions: ["Sunny"],
+      },
+    }),
     timestamp: new Date("2024-01-16"),
   },
   {
-    data: mockWeatherResponse,
+    data: createWeatherResponse({
+      current: {
+        ...createWeatherResponse().current,
+        temperature: 12,
+        feelslike: 10,
+        weather_descriptions: ["Rain"],
+      },
+    }),
     timestamp: new Date("2024-01-17"),
   },
   {
-    data: mockWeatherResponse,
+    data: createWeatherResponse({
+      current: {
+        ...createWeatherResponse().current,
+        temperature: -3,
+        feelslike: -8,
+        weather_descriptions: ["Snow"],
+      },
+    }),
     timestamp: new Date("2024-01-18"),
   },
 ];
 
 export const mockHistoryData: Weather[] = [
   {
-    data: mockWeatherResponse,
+    data: createWeatherResponse({
+      current: {
+        ...createWeatherResponse().current,
+        temperature: 7,
+        feelslike: 5,
+        weather_descriptions: ["Fog"],
+      },
+    }),
     timestamp: new Date("2024-01-12"),
   },
   {
-    data: mockWeatherResponse,
+    data: createWeatherResponse({
+      current: {
+        ...createWeatherResponse().current,
+        temperature: 11,
+        feelslike: 9,
+        weather_descriptions: ["Windy"],
+      },
+    }),
     timestamp: new Date("2024-01-13"),
   },
   {
-    data: mockWeatherResponse,
+    data: createWeatherResponse({
+      current: {
+        ...createWeatherResponse().current,
+        temperature: 19,
+        feelslike: 18,
+        weather_descriptions: ["Clear"],
+      },
+    }),
     timestamp: new Date("2024-01-14"),
   },
 ];
