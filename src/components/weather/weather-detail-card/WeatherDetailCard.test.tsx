@@ -116,14 +116,4 @@ describe("WeatherDetailCard", () => {
 
     expect(onForceRefresh).toHaveBeenCalledTimes(1);
   });
-
-  it("disables the refresh button while loading", () => {
-    renderCard({ weather: createWeather(), isLoading: true });
-
-    const refreshButton = screen.getByRole("button", {
-      name: /refresh weather/i,
-    });
-
-    expect(refreshButton).toHaveProperty("disabled", true);
-  });
 });
