@@ -1,5 +1,5 @@
 import { useState } from "react";
-import WeatherDetailCard from "@/components/weather/current-weather-card/WeatherDetailCard";
+import WeatherDetailCard from "@/components/weather/weather-detail-card/WeatherDetailCard";
 import WeatherGrid from "@/components/weather/weather-grid/WeatherGrid";
 import { useWeather } from "@/hooks/useWeather";
 import {
