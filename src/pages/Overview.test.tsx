@@ -16,7 +16,7 @@ vi.mock("@/hooks/useWeather", () => ({
   useWeather: vi.fn(),
 }));
 
-vi.mock("@/components/weather/current-weather-card/WeatherDetailCard", () => ({
+vi.mock("@/components/weather/weather-detail-card/WeatherDetailCard", () => ({
   default: ({ onForceRefresh }: { onForceRefresh: () => void }) => (
     <button onClick={onForceRefresh}>refresh weather</button>
   ),

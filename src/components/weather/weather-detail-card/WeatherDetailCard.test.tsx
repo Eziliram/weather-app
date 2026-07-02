@@ -112,7 +112,7 @@ describe("WeatherDetailCard", () => {
     expect(screen.getByText(/Humidity/i)).toBeTruthy();
     expect(screen.getByText(/Wind/i)).toBeTruthy();
 
-    fireEvent.click(screen.getByRole("button", { name: /button_refresh/i }));
+    fireEvent.click(screen.getByRole("button", { name: /refresh weather/i }));
 
     expect(onForceRefresh).toHaveBeenCalledTimes(1);
   });
@@ -121,7 +121,7 @@ describe("WeatherDetailCard", () => {
     renderCard({ weather: createWeather(), isLoading: true });
 
     const refreshButton = screen.getByRole("button", {
-      name: /button_refresh/i,
+      name: /refresh weather/i,
     });
 
     expect(refreshButton).toHaveProperty("disabled", true);

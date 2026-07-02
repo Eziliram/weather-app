@@ -198,7 +198,7 @@ const WeatherDetailCard: React.FC<Props> = ({
             variant="ghost"
             onClick={onForceRefresh}
             disabled={isLoading}
-            aria-label="button_refresh">
+            aria-label="Refresh weather">
             <HiOutlineRefresh />
           </IconButton>
           <Text fontSize="sm" color="gray.400">
