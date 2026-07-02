@@ -11,37 +11,13 @@ import {
   Button,
   NativeSelect,
 } from "@chakra-ui/react";
-import type { Weather } from "@/types/weather";
-
-export type LocationOption = {
-  label: string;
-  value: string;
-};
-
-export const WEATHER_LOCATIONS = [
-  {
-    label: "Cape Town",
-    value: "Cape Town",
-  },
-  {
-    label: "Johannesburg",
-    value: "Johannesburg",
-  },
-  {
-    label: "Durban",
-    value: "Durban",
-  },
-];
-
-const DEFAULT_CITY = "Cape Town";
+import { DEFAULT_CITY, WEATHER_LOCATIONS, type Weather } from "@/types/weather";
 
 const Overview = () => {
   const [selectedCity, setSelectedCity] = useState(DEFAULT_CITY);
   const { weather, isLoading, hasError, forceRefresh } =
     useWeather(selectedCity);
-  const [selectedWeather, setSelectedWeather] = useState<Weather | undefined>(
-    undefined,
-  );
+  const [selectedWeather, setSelectedWeather] = useState<Weather | null>(null);
   const [showWeatherInsightsPreview, setWeatherInsightsPreview] =
     useState(false);
 
@@ -57,12 +33,19 @@ const Overview = () => {
     <>
       <section id="weather_details">
         <Box marginTop={8} marginX={8}>
-          <Heading mb={2}>Select location</Heading>
+          <Text mb={2} fontWeight="medium">
+            Select location
+          </Text>
 
-          <NativeSelect.Root>
+          <NativeSelect.Root disabled={isLoading}>
             <NativeSelect.Field
               value={selectedCity}
-              onChange={(e) => setSelectedCity(e.target.value)}>
+              aria-label="Select location"
+              onChange={(e) => {
+                setSelectedCity(e.target.value);
+                setSelectedWeather(null);
+                setWeatherInsightsPreview(false);
+              }}>
               {WEATHER_LOCATIONS.map((location) => (
                 <option key={location.value} value={location.value}>
                   {location.label}
@@ -86,12 +69,14 @@ const Overview = () => {
         <Box display="flex" alignItems="center" gap={3} mt={4} mb={4}>
           <Switch.Root
             checked={showWeatherInsightsPreview}
-            onCheckedChange={() =>
-              setWeatherInsightsPreview(
-                (showWeatherInsightsPreview) => !showWeatherInsightsPreview,
-              )
-            }>
-            <Switch.HiddenInput />
+            onCheckedChange={() => {
+              const next = !showWeatherInsightsPreview;
+              setWeatherInsightsPreview(next);
+              if (!next) {
+                setSelectedWeather(null);
+              }
+            }}>
+            <Switch.HiddenInput aria-label="Show weather preview" />
             <Switch.Control />
             <Switch.Label fontSize="md">Show preview*</Switch.Label>
           </Switch.Root>
@@ -109,10 +94,8 @@ const Overview = () => {
             <Button
               variant="outline"
               colorPalette="teal"
-              disabled={
-                !selectedWeather || selectedWeather === weather?.current
-              }
-              onClick={() => setSelectedWeather(weather?.current)}>
+              disabled={selectedWeather === null}
+              onClick={() => setSelectedWeather(null)}>
               Show today's weather
             </Button>
           </Box>

@@ -6,7 +6,7 @@ type Props = {
   id: string;
   title: string;
   data?: Weather[];
-  selectedWeather?: Weather;
+  selectedWeather?: Weather | null;
   onSelectWeather: (weather: Weather) => void;
 };
 

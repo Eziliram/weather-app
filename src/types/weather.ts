@@ -1,3 +1,24 @@
+type LocationOption = {
+  label: string;
+  value: string;
+};
+
+export const WEATHER_LOCATIONS: LocationOption[] = [
+  {
+    label: "Cape Town",
+    value: "Cape Town",
+  },
+  {
+    label: "Johannesburg",
+    value: "Johannesburg",
+  },
+  {
+    label: "Durban",
+    value: "Durban",
+  },
+];
+
+export const DEFAULT_CITY = "Cape Town";
 export interface WeatherResponse {
   request: {
     type: string;
