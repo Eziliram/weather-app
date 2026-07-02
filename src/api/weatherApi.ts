@@ -1,8 +1,25 @@
 import http from "./http";
 
-const WEATHERSTACK_API_KEY = "d84fe55ba099cab3cb0d5c4e46e484b7"; // NOTE: We should ideally pull this API key from a secrets manager
 const WEATHERSTACK_BASE_URL = `https://api.weatherstack.com`;
+const WEATHERSTACK_API_KEY =
+  import.meta.env.VITE_WEATHERSTACK_API_KEY;
 
+if (!WEATHERSTACK_API_KEY) {
+  throw new Error(
+    "Missing VITE_WEATHERSTACK_API_KEY",
+  );
+}
+
+/**
+ * WeatherStack free tier limitations:
+ *
+ * - current weather supported
+ * - forecast/history unavailable
+ *
+ * Forecast and history endpoints are implemented
+ * to preserve the API contract and are mocked
+ * during development/demo mode.
+ */
 const weatherApi = {
     getCurrent: (city: string) => http(`${WEATHERSTACK_BASE_URL}/current?access_key=${WEATHERSTACK_API_KEY}&query=${city}`),
     getForecast: (city: string) => http(`${WEATHERSTACK_BASE_URL}/forecast?access_key=${WEATHERSTACK_API_KEY}&query=${city}&forecast_days=3`),
