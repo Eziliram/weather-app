@@ -1,3 +1,6 @@
+// Weather data changes relatively slowly,
+// so we can cache it in localStorage for a short period of time
+// to reduce API calls and improve performance.
 const CACHE_DURATION = 1 * 60 * 60 * 1000; // 1 hour
 
 export const weatherCache = {
@@ -10,6 +13,8 @@ export const weatherCache = {
 
         const parsedCache = JSON.parse(cache) as { data: T; cachedAt: number };
 
+        // To keep the caching implementation simple,
+        // expired cache entries are removed when they are accessed.
         const expired = Date.now() - parsedCache.cachedAt > CACHE_DURATION;
 
         if (expired) {

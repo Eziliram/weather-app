@@ -87,14 +87,16 @@ const WeatherDetailCard: React.FC<Props> = ({
     </Box>
   );
 
-  // TODO: Add skeleton loaders
-  // if (isLoading) {
-  //   return (
-  //     <Box>
-  //       <Heading fontSize="xl">Loading weather data...</Heading>
-  //     </Box>
-  //   );
-  // }
+  // Skeleton loaders were intentionally ignored here to prioritise
+  // core functionality and test coverage within the scope.
+  // TODO: Replace with Chakra Skeleton components.
+  if (isLoading) {
+    return (
+      <Box>
+        <Heading fontSize="xl">Loading weather data...</Heading>
+      </Box>
+    );
+  }
 
   if (hasError) {
     return (
@@ -193,6 +195,7 @@ const WeatherDetailCard: React.FC<Props> = ({
         </Box>
 
         <HStack alignItems="center" gap={3}>
+          {/* Manual refresh allows users to bypass cached data */}
           <IconButton
             id="button_refresh"
             variant="ghost"

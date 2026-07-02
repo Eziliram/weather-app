@@ -15,9 +15,18 @@ import { DEFAULT_CITY, WEATHER_LOCATIONS, type Weather } from "@/types/weather";
 
 const Overview = () => {
   const [selectedCity, setSelectedCity] = useState(DEFAULT_CITY);
+
+  // Keep all weather fetching/caching logic inside the hook so that
+  // the page component only needs to manage UI state.
   const { weather, isLoading, hasError, forceRefresh } =
     useWeather(selectedCity);
+
+  // If no weather is selected, show todays weather.
+  // Selecting a forecast/history tile overrides the detail card.
   const [selectedWeather, setSelectedWeather] = useState<Weather | null>(null);
+
+  // Weatherstacks free tier doesnt support forecast or historical data,
+  // so this toggle displays mocked data to demonstrate the intended UX.
   const [showWeatherInsightsPreview, setWeatherInsightsPreview] =
     useState(false);
 
@@ -25,7 +34,8 @@ const Overview = () => {
   const historyData = showWeatherInsightsPreview ? weather?.history : [];
 
   const handleForceRefresh = () => {
-    // Enhancement: throttle function to only allow a specified number of refreshes in a certain timeframe
+    // Future enhancement:
+    // limit how often users can force a refresh to reduce API usage.
     forceRefresh(selectedCity, true);
   };
 
@@ -42,6 +52,8 @@ const Overview = () => {
               value={selectedCity}
               aria-label="Select location"
               onChange={(e) => {
+                // Reset any preview selections when switching locations so that
+                // the UI always reflects the newly selected city.
                 setSelectedCity(e.target.value);
                 setSelectedWeather(null);
                 setWeatherInsightsPreview(false);
@@ -90,6 +102,8 @@ const Overview = () => {
         </Text>
 
         {showWeatherInsightsPreview && (
+          // Allow users to easily switch back to todays weather
+          // after selecting a forecast/history preview.
           <Box marginTop={4}>
             <Button
               variant="outline"

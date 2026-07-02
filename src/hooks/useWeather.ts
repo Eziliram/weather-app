@@ -17,6 +17,10 @@ export const useWeather = (city: string) => {
                     data: currentWeatherData.data,
                     cachedAt: currentWeatherData.lastUpdated
                 } as Weather,
+                // Weatherstacks free tier does not support
+                // forecast or historical weather data,
+                // so mocked data is used to demonstrate
+                // the UI and overall application flow.
                 forecast: mockForecastData as Weather[],
                 history: mockHistoryData as Weather[],
             });
@@ -28,6 +32,7 @@ export const useWeather = (city: string) => {
         }
     }, []);
 
+    // Reload weather data whenever the selected city changes.
     React.useEffect(() => {
         loadWeather(city);
     }, [loadWeather, city]);
@@ -36,6 +41,8 @@ export const useWeather = (city: string) => {
         weather,
         isLoading,
         hasError,
+        // Expose a manual refresh action so the UI can
+        // bypass the cache when the user requests fresh data.
         forceRefresh: (city: string, forceRefresh: boolean) => loadWeather(city, forceRefresh),
     }
 }
