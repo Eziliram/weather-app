@@ -56,7 +56,7 @@ export interface WeatherResponse {
 
 export interface Weather {
   data: WeatherResponse;
-  timestamp: Date;
+  cachedAt: Date;
 }
 
 export interface WeatherState {

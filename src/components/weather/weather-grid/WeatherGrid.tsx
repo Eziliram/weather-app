@@ -6,6 +6,8 @@ type Props = {
   id: string;
   title: string;
   data?: Weather[];
+  selectedWeather?: Weather;
+  onSelectWeather: (weather: Weather) => void;
 };
 
 const WeatherGrid: React.FC<Props> = (props) => {
@@ -22,7 +24,14 @@ const WeatherGrid: React.FC<Props> = (props) => {
           gap={[2, 4]}
           marginTop={4}>
           {props.data?.map((item, index) => {
-            return <WeatherTile key={index} data={item} />;
+            return (
+              <WeatherTile
+                key={index}
+                data={item}
+                isSelected={props.selectedWeather?.cachedAt === item.cachedAt}
+                onClick={() => props.onSelectWeather(item)}
+              />
+            );
           })}
         </Box>
       ) : (

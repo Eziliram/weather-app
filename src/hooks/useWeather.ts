@@ -15,7 +15,7 @@ export const useWeather = (city: string) => {
             setWeather({
                 current: {
                     data: currentWeatherData.data,
-                    timestamp: currentWeatherData.lastUpdated
+                    cachedAt: currentWeatherData.lastUpdated
                 } as Weather,
                 forecast: mockForecastData as Weather[],
                 history: mockHistoryData as Weather[],

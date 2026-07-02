@@ -9,7 +9,13 @@ import type { Weather } from "@/types/weather";
 const renderTile = (data: Weather) =>
   render(
     <ChakraProvider value={defaultSystem}>
-      <WeatherTile data={data} />
+      <WeatherTile
+        data={data}
+        onClick={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+        isSelected={false}
+      />
     </ChakraProvider>,
   );
 
@@ -28,7 +34,7 @@ describe("WeatherTile", () => {
           temperature: 21,
         },
       },
-      timestamp: new Date("2024-01-01T12:00:00Z"),
+      cachedAt: new Date("2024-01-01T12:00:00Z"),
     } as Weather;
 
     renderTile(data);

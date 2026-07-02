@@ -2,17 +2,21 @@ import { useState } from "react";
 import WeatherDetailCard from "@/components/weather/current-weather-card/WeatherDetailCard";
 import WeatherGrid from "@/components/weather/weather-grid/WeatherGrid";
 import { useWeather } from "@/hooks/useWeather";
-import { Heading, Text, Switch, Em, Box } from "@chakra-ui/react";
+import { Heading, Text, Switch, Em, Box, Button } from "@chakra-ui/react";
+import type { Weather } from "@/types/weather";
 
 // Set default city as Cape Town
 // Enhancement: Ability to search for/detect a location
 const DEFAULT_CITY = "Cape Town";
 
 const Overview = () => {
-  const [showWeatherInsightsPreview, setWeatherInsightsPreview] =
-    useState(false);
   const { weather, isLoading, hasError, forceRefresh } =
     useWeather(DEFAULT_CITY);
+  const [selectedWeather, setSelectedWeather] = useState<Weather | undefined>(
+    undefined,
+  );
+  const [showWeatherInsightsPreview, setWeatherInsightsPreview] =
+    useState(false);
 
   const forecastData = showWeatherInsightsPreview ? weather?.forecast : [];
   const historyData = showWeatherInsightsPreview ? weather?.history : [];
@@ -26,7 +30,7 @@ const Overview = () => {
     <>
       <section id="weather_details">
         <WeatherDetailCard
-          weather={weather?.current}
+          weather={selectedWeather ?? weather?.current}
           isLoading={isLoading}
           hasError={hasError}
           onForceRefresh={handleForceRefresh}
@@ -55,6 +59,20 @@ const Overview = () => {
             the weather grid.
           </Em>
         </Text>
+
+        {showWeatherInsightsPreview && (
+          <Box marginTop={4}>
+            <Button
+              variant="outline"
+              colorPalette="teal"
+              disabled={
+                !selectedWeather || selectedWeather === weather?.current
+              }
+              onClick={() => setSelectedWeather(weather?.current)}>
+              Show today's weather
+            </Button>
+          </Box>
+        )}
       </section>
 
       <section id="weather_grid">
@@ -62,11 +80,15 @@ const Overview = () => {
           id="weather_forecast"
           title="3-day forecast"
           data={forecastData}
+          selectedWeather={selectedWeather}
+          onSelectWeather={setSelectedWeather}
         />
         <WeatherGrid
           id="weather_history"
           title="3-day history"
           data={historyData}
+          selectedWeather={selectedWeather}
+          onSelectWeather={setSelectedWeather}
         />
       </section>
     </>

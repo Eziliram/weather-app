@@ -78,7 +78,7 @@ const createWeather = (): Weather => ({
       is_day: "yes",
     },
   },
-  timestamp: new Date("2024-01-01T12:00:00Z"),
+  cachedAt: new Date("2024-01-01T12:00:00Z"),
 });
 
 afterEach(() => {

@@ -62,7 +62,7 @@ describe("useWeather", () => {
     });
 
     expect(mockedGetCurrent).toHaveBeenLastCalledWith("Cape Town", true);
-    expect(result.current.weather?.current?.timestamp).toEqual(
+    expect(result.current.weather?.current?.cachedAt).toEqual(
       currentWeatherPayload.lastUpdated,
     );
   });

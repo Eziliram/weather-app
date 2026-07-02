@@ -2,16 +2,26 @@ import type { Weather } from "@/types/weather";
 import { formatDate, formatTemperature } from "@/utils/formatter";
 import { Box, Heading, Image, Text } from "@chakra-ui/react";
 
-const WeatherTile = ({ data }: { data: Weather }) => {
+const WeatherTile = ({
+  data,
+  onClick,
+  isSelected,
+}: {
+  data: Weather;
+  onClick: () => void;
+  isSelected: boolean;
+}) => {
   return (
     <Box
-      borderWidth="1px"
+      borderWidth={isSelected ? "2px" : "1px"}
+      borderColor={isSelected ? "teal.500" : "gray.700"}
       borderRadius="md"
       padding={[3, 4]}
       width={["100%", "120px"]}
-      textAlign="center">
+      textAlign="center"
+      onClick={onClick}>
       <Text fontSize="xs" mb={2}>
-        {formatDate(data.timestamp, "short")}
+        {formatDate(data.cachedAt, "short")}
       </Text>
 
       <Box display="flex" flexDirection="column" alignItems="center" gap={3}>

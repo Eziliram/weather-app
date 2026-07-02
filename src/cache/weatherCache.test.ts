@@ -32,7 +32,7 @@ describe("weatherCache", () => {
       "current-Cape Town",
       JSON.stringify({
         data: payload,
-        timestamp: expiredTimestamp,
+        cachedAt: expiredTimestamp,
       }),
     );
 

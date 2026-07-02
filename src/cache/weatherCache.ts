@@ -8,9 +8,9 @@ export const weatherCache = {
             return null;
         }
 
-        const parsedCache = JSON.parse(cache) as { data: T; timestamp: number };
+        const parsedCache = JSON.parse(cache) as { data: T; cachedAt: number };
 
-        const expired = Date.now() - parsedCache.timestamp > CACHE_DURATION;
+        const expired = Date.now() - parsedCache.cachedAt > CACHE_DURATION;
 
         if (expired) {
             localStorage.removeItem(key);
@@ -19,7 +19,7 @@ export const weatherCache = {
 
         return {
             data: parsedCache.data,
-            lastUpdated: new Date(parsedCache.timestamp)
+            lastUpdated: new Date(parsedCache.cachedAt)
         };
     },
 
@@ -28,7 +28,7 @@ export const weatherCache = {
             key,
             JSON.stringify({
                 data,
-                timestamp: Date.now()
+                cachedAt: Date.now()
             })
         )
     }

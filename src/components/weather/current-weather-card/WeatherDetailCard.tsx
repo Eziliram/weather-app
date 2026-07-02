@@ -54,10 +54,10 @@ const WeatherDetailCard: React.FC<Props> = ({
   const formattedDateTime = `${formattedDate} · ${formattedTime}`;
 
   const formatLastUpdated = () => {
-    if (!weather?.timestamp) {
+    if (!weather?.cachedAt) {
       return "Unknown";
     }
-    return `${formatDate(weather?.timestamp)} · ${formatTime(weather?.timestamp)}`;
+    return `${formatDate(weather?.cachedAt)} · ${formatTime(weather?.cachedAt)}`;
   };
 
   const StatItem: React.FC<{
