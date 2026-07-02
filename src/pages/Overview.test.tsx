@@ -86,6 +86,17 @@ describe("Overview", () => {
     });
   });
 
+  it("updates the selected city when the location dropdown changes", () => {
+    mockedUseWeather.mockClear();
+
+    renderOverview();
+
+    const select = screen.getByRole("combobox");
+    fireEvent.change(select, { target: { value: "Johannesburg" } });
+
+    expect(mockedUseWeather).toHaveBeenLastCalledWith("Johannesburg");
+  });
+
   it("calls forceRefresh with the default city when the refresh button is triggered", () => {
     const forceRefresh = vi.fn();
 
